@@ -1,0 +1,9 @@
+{
+    "name": "WhoVoted",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/DarthLilo/WhoVoted",
+    "description": "Gives players a vote badge on the spectator screen",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2100"
+    ]
+}
