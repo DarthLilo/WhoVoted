@@ -37,7 +37,7 @@ public class WhoVotedPatch
     [HarmonyPrefix]
     private static void VoteShiptoLeaveEarlyPatch(TimeOfDay __instance)
     {
-        if (!__instance.votedShipToLeaveEarlyThisRound)
+        if (HUDManager.Instance != null && HUDManager.Instance.localPlayer != null && !__instance.votedShipToLeaveEarlyThisRound)
         {
             WhoVotedNetworkHelper.Instance.SyncWhoVotedServerRpc(HUDManager.Instance.localPlayer.NetworkObjectId.ToString());
         }

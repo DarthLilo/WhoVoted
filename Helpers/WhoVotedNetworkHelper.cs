@@ -28,9 +28,17 @@ namespace WhoVoted.Helpers
                 {
                     if (playerScript.NetworkObjectId == TargetPlayerID)
                     {
-                        Animator key = HUDManager.Instance.spectatingPlayerBoxes.FirstOrDefault((KeyValuePair<Animator, PlayerControllerB> x) => x.Value == playerScript).Key;
-                        GameObject HasVotedImage = key.gameObject.transform.Find("HasVoted").gameObject;
-                        HasVotedImage.GetComponent<RawImage>().enabled = true;
+                        if (HUDManager.Instance != null && HUDManager.Instance.spectatingPlayerBoxes != null)
+                        {
+                            Animator key = HUDManager.Instance.spectatingPlayerBoxes.FirstOrDefault((KeyValuePair<Animator, PlayerControllerB> x) => x.Value == playerScript).Key;
+                            if (key != null)
+                            {
+                                GameObject HasVotedImage = key.gameObject.transform.Find("HasVoted").gameObject;
+                                HasVotedImage.GetComponent<RawImage>().enabled = true;
+                            }
+                            
+                        }
+                        
                     }
                 }
                 SyncWhoVotedClientRpc(inc_ulong);
@@ -50,9 +58,17 @@ namespace WhoVoted.Helpers
                 {
                     if (playerScript.NetworkObjectId == TargetPlayerID)
                     {
-                        Animator key = HUDManager.Instance.spectatingPlayerBoxes.FirstOrDefault((KeyValuePair<Animator, PlayerControllerB> x) => x.Value == playerScript).Key;
-                        GameObject HasVotedImage = key.gameObject.transform.Find("HasVoted").gameObject;
-                        HasVotedImage.GetComponent<RawImage>().enabled = true;
+                        if (HUDManager.Instance != null && HUDManager.Instance.spectatingPlayerBoxes != null)
+                        {
+                            Animator key = HUDManager.Instance.spectatingPlayerBoxes.FirstOrDefault((KeyValuePair<Animator, PlayerControllerB> x) => x.Value == playerScript).Key;
+                            if (key != null)
+                            {
+                                GameObject HasVotedImage = key.gameObject.transform.Find("HasVoted").gameObject;
+                                HasVotedImage.GetComponent<RawImage>().enabled = true;
+                            }
+                            
+                        }
+                        
                     }
                 }
             } else {
