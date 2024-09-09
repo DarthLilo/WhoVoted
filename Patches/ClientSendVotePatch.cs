@@ -27,6 +27,27 @@ public class WhoVotedUIPatch
         {
             __instance.spectatingPlayerBoxes.ElementAt(i).Key.gameObject.transform.Find("HasVoted").gameObject.GetComponent<RawImage>().enabled = false;
         }
+        WhoVotedNetworkHelper.Instance.ClearVotedServerRpc();
+    }
+
+    [HarmonyPatch("UpdateBoxesSpectateUI")]
+    [HarmonyPostfix]
+    private static void SyncVotedClientsOnDeath(HUDManager __instance)
+    {   
+        PlayerControllerB playerScript;
+        for (int i = 0; i < StartOfRound.Instance.allPlayerScripts.Length; i++)
+        {
+            playerScript = StartOfRound.Instance.allPlayerScripts[i];
+            if (WhoVotedNetworkHelper.VotedClients.ContainsKey(playerScript.NetworkObjectId.ToString()))
+            {
+                Animator key = __instance.spectatingPlayerBoxes.FirstOrDefault((KeyValuePair<Animator, PlayerControllerB> x) => x.Value == playerScript).Key;
+                if (key != null)
+                    {
+                        GameObject HasVotedImage = key.gameObject.transform.Find("HasVoted").gameObject;
+                        HasVotedImage.GetComponent<RawImage>().enabled = true;
+                    }
+            }
+        }
     }
 }
 
@@ -39,7 +60,8 @@ public class WhoVotedPatch
     {
         if (HUDManager.Instance != null && HUDManager.Instance.localPlayer != null && !__instance.votedShipToLeaveEarlyThisRound)
         {
-            WhoVotedNetworkHelper.Instance.SyncWhoVotedServerRpc(HUDManager.Instance.localPlayer.NetworkObjectId.ToString());
+            string playerNetworkObjectID = HUDManager.Instance.localPlayer.NetworkObjectId.ToString();
+            WhoVotedNetworkHelper.Instance.SyncWhoVotedServerRpc(playerNetworkObjectID);
         }
     }
 }

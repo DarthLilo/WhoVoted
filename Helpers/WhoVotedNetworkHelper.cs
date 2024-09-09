@@ -11,6 +11,8 @@ namespace WhoVoted.Helpers
     {
         public static WhoVotedNetworkHelper Instance { get; private set; }
 
+        public static Dictionary<string, bool> VotedClients = [];
+
         private void Start()
         {
             Instance = this;
@@ -41,6 +43,7 @@ namespace WhoVoted.Helpers
                         
                     }
                 }
+                VotedClients[inc_ulong] = true;
                 SyncWhoVotedClientRpc(inc_ulong);
             } else {
                 WhoVoted.Logger.LogError("Received null ulong, skipping");
@@ -71,9 +74,23 @@ namespace WhoVoted.Helpers
                         
                     }
                 }
+                VotedClients[inc_ulong] = true;
             } else {
                 WhoVoted.Logger.LogError("Received null ulong, skipping");
             }
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void ClearVotedServerRpc()
+        {
+            VotedClients.Clear();
+            ClearVotedClientRpc();
+        }
+
+        [ClientRpc]
+        public void ClearVotedClientRpc()
+        {
+            VotedClients.Clear();
         }
     }
 }

@@ -24,7 +24,7 @@ package_files = {
     "manifest.json",
     "README.md",
     "bin\\Debug\\netstandard2.1\\DarthLilo.WhoVoted.dll",
-    "E:\\UnityProjects\WhoVoted\\AssetBundles\\StandaloneWindows\\lilowhovotedassets"
+    "E:\\UnityProjects\\WhoVoted\\AssetBundles\\StandaloneWindows\\lilowhovotedassets"
 }
 
 author = "DarthLilo"
